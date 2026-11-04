@@ -2,6 +2,8 @@
 
 This is an operations checklist, not deployment approval. The system owner, ICT, information security, records management, and finance/procurement stakeholders must approve the actual host, retention rules, roles, and workflows before real records are entered.
 
+PSA-SAMS requires a PHP/Apache runtime and MySQL/MariaDB database. Netlify's standard static hosting does not execute this PHP application or supply its database; use an ICT-approved compatible managed host rather than trying to resolve a Netlify 404 with static-site redirects.
+
 ## Stage 1: local XAMPP demonstration
 
 - Keep XAMPP bound to the development machine or an explicitly trusted private lab network. Never port-forward it or expose it to the internet.

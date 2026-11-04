@@ -118,6 +118,9 @@ The Principal presentation should be treated as a demonstration of the current a
 ## Security and deployment note
 
 Use XAMPP only for local development and review. Do not expose XAMPP directly to the internet or use this application with real Academy records until the organization has approved a deployment. Operational deployment requires a managed, patched PHP/Apache and MariaDB host on a private network, HTTPS, a dedicated least-privilege database account, secrets management, restricted administration access, tested backups and restores, monitoring, independent security review, and acceptance testing against Academy asset, finance, and approval policies. Set `PSA_REQUIRE_HTTPS=1` and `PSA_COOKIE_SECURE=1` in protected service configuration and configure HTTP-to-HTTPS redirection at the TLS endpoint. If a trusted reverse proxy terminates TLS, follow the conditions in the deployment checklist; the app intentionally does not trust client-supplied forwarding headers. The supplied Apache rules help prevent directory listings and direct access to SQL files and the configuration directory; verify that Apache allows `.htaccess` overrides in the target environment.
+
+**Hosting compatibility:** PSA-SAMS is a server-rendered PHP application backed by MySQL/MariaDB. Netlify's standard static hosting does not run this PHP application or provide its database, so uploading the project there can produce a 404 or serve only static files. A Netlify redirect or `index.html` fallback will not make the application work. Deploy it to an ICT-approved PHP/Apache and MySQL/MariaDB host instead; use the exact deployed URL and server logs to diagnose a 404 on a compatible host.
+
 For TLS terminated by a trusted reverse proxy, set `PSA_COOKIE_SECURE=1` in the protected PHP service environment. Do not set it by reading untrusted request headers.
 
 ## Project layout

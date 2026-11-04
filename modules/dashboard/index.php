@@ -25,10 +25,19 @@ $metrics = [
     )->fetchColumn(),
 ];
 $conditionSummary = $pdo->query(
-    'SELECT condition_status, COUNT(*) AS asset_count
-     FROM assets
-     GROUP BY condition_status
-     ORDER BY FIELD(condition_status, \'Good\', \'Fair\', \'Poor\', \'Unserviceable\')'
+    'SELECT conditions.condition_status, COALESCE(asset_counts.asset_count, 0) AS asset_count
+     FROM (
+         SELECT \'Good\' AS condition_status, 1 AS sort_order
+         UNION ALL SELECT \'Fair\', 2
+         UNION ALL SELECT \'Poor\', 3
+         UNION ALL SELECT \'Unserviceable\', 4
+     ) AS conditions
+     LEFT JOIN (
+         SELECT condition_status, COUNT(*) AS asset_count
+         FROM assets
+         GROUP BY condition_status
+     ) AS asset_counts ON asset_counts.condition_status = conditions.condition_status
+     ORDER BY conditions.sort_order'
 )->fetchAll();
 $largestConditionCount = max(array_column($conditionSummary, 'asset_count') ?: [0]);
 $lowStockItems = [];
@@ -48,7 +57,7 @@ $activityStatement = $pdo->query(
      FROM audit_logs AS logs
      LEFT JOIN users ON users.id = logs.user_id
      ORDER BY logs.`timestamp` DESC, logs.id DESC
-     LIMIT 8'
+     LIMIT 4'
 );
 $recentActivity = $activityStatement->fetchAll();
 
@@ -90,20 +99,26 @@ require __DIR__ . '/../../includes/header.php';
 require __DIR__ . '/../../includes/sidebar.php';
 ?>
 <main class="main-content">
-    <section class="dashboard-welcome">
-        <div class="dashboard-welcome-copy">
-            <p class="eyebrow">Operational overview</p>
-            <h1>Welcome back, <?= escapeHtml(strtok((string) ($_SESSION['user']['full_name'] ?? 'there'), ' ')) ?></h1>
-            <p>A clear snapshot of assets, stores and work needing attention.</p>
+    <section class="dashboard-page-heading">
+        <div>
+            <h1>Dashboard</h1>
+            <p class="muted">Overview of assets, stock and work that needs attention.</p>
         </div>
-        <div class="dashboard-date">
+        <div class="dashboard-date" aria-label="Current date">
             <span>Today</span>
-            <strong><?= escapeHtml(date('l, F j, Y')) ?></strong>
+            <strong><time datetime="<?= escapeHtml(date('Y-m-d')) ?>"><?= escapeHtml(date('D, M j, Y')) ?></time></strong>
         </div>
     </section>
 
+    <div class="dashboard-section-heading">
+        <div>
+            <h2>At a glance</h2>
+            <p class="muted">Counts from the current register</p>
+        </div>
+    </div>
+
     <section class="metric-grid dashboard-metrics" aria-label="Summary metrics">
-        <article class="metric-card metric-assets">
+        <article class="metric-card">
             <span class="metric-label">Total assets</span>
             <strong class="metric-value"><?= number_format($metrics['assets']) ?></strong>
             <span class="metric-note">Registered in the system</span>
@@ -111,7 +126,7 @@ require __DIR__ . '/../../includes/sidebar.php';
                 <a class="metric-link" href="<?= APP_BASE_URL ?>/modules/assets/index.php">Open asset register <span aria-hidden="true">→</span></a>
             <?php endif; ?>
         </article>
-        <article class="metric-card metric-transfers">
+        <article class="metric-card">
             <span class="metric-label">Pending allocations</span>
             <strong class="metric-value"><?= number_format($metrics['pending']) ?></strong>
             <span class="metric-note">Transfers awaiting a decision</span>
@@ -120,14 +135,14 @@ require __DIR__ . '/../../includes/sidebar.php';
             <?php endif; ?>
         </article>
         <?php if ($canReviewRequisitions): ?>
-            <article class="metric-card metric-requisitions">
+            <article class="metric-card">
                 <span class="metric-label">Pending requisitions</span>
                 <strong class="metric-value"><?= number_format($metrics['requisitions']) ?></strong>
                 <span class="metric-note">Store requests awaiting review</span>
                 <a class="metric-link" href="<?= APP_BASE_URL ?>/modules/requisitions/index.php">Open requisitions <span aria-hidden="true">→</span></a>
             </article>
         <?php endif; ?>
-        <article class="metric-card metric-stock">
+        <article class="metric-card">
             <span class="metric-label">Low stock alerts</span>
             <strong class="metric-value"><?= number_format($metrics['low_stock']) ?></strong>
             <span class="metric-note">At or below reorder level</span>
@@ -135,7 +150,7 @@ require __DIR__ . '/../../includes/sidebar.php';
                 <a class="metric-link" href="<?= APP_BASE_URL ?>/modules/stores/index.php">Review stock</a>
             <?php endif; ?>
         </article>
-        <article class="metric-card metric-maintenance">
+        <article class="metric-card">
             <span class="metric-label">Needs maintenance</span>
             <strong class="metric-value"><?= number_format($metrics['maintenance']) ?></strong>
             <span class="metric-note">Reported or in-progress repairs</span>
@@ -145,12 +160,12 @@ require __DIR__ . '/../../includes/sidebar.php';
         </article>
     </section>
 
-    <section class="content-grid dashboard-insights" aria-label="Operational summaries">
+    <section class="dashboard-main-grid" aria-label="Asset condition and recent activity">
         <article class="panel">
             <div class="panel-heading">
                 <div><h2>Asset condition</h2><p class="muted">Registered assets by current condition</p></div>
             </div>
-            <?php if ($conditionSummary === []): ?>
+            <?php if ((int) $metrics['assets'] === 0): ?>
                 <p class="empty-state">Asset condition summaries will appear after assets are registered.</p>
             <?php else: ?>
                 <ul class="chart-list">
@@ -165,6 +180,42 @@ require __DIR__ . '/../../includes/sidebar.php';
                 </ul>
             <?php endif; ?>
         </article>
+        <article class="panel activity-panel" id="recent-activity">
+            <div class="panel-heading">
+                <div>
+                    <h2>Recent activity</h2>
+                    <p class="muted">Latest recorded system events</p>
+                </div>
+                <?php if (hasRole(['super_admin', 'admin_officer', 'approving_officer', 'management'])): ?>
+                    <a class="text-link" href="<?= APP_BASE_URL ?>/modules/reports/index.php">View audit</a>
+                <?php endif; ?>
+            </div>
+            <ul class="activity-list">
+                <?php if ($recentActivity === []): ?>
+                    <li class="activity-empty">No activity has been recorded yet.</li>
+                <?php else: ?>
+                    <?php foreach ($recentActivity as $activity): ?>
+                        <?php $activityDate = strtotime((string) $activity['timestamp']); ?>
+                        <li class="activity-item">
+                            <span class="activity-marker" aria-hidden="true"></span>
+                            <div class="activity-detail">
+                                <strong><?= escapeHtml($activity['action_performed']) ?></strong>
+                                <span class="muted">
+                                    <?= escapeHtml($activity['full_name'] ?? 'System') ?>
+                                    · <?= escapeHtml($activity['target_table']) ?><?php if ($activity['record_id'] !== null): ?> #<?= (int) $activity['record_id'] ?><?php endif; ?>
+                                </span>
+                            </div>
+                            <time class="activity-time" datetime="<?= escapeHtml(date(DATE_ATOM, $activityDate)) ?>">
+                                <?= escapeHtml(date('M j, H:i', $activityDate)) ?>
+                            </time>
+                        </li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </ul>
+        </article>
+    </section>
+
+    <section class="dashboard-lower-grid" aria-label="Stock alerts and common tasks">
         <article class="panel">
             <div class="panel-heading">
                 <div><h2>Stock needing attention</h2><p class="muted">Items currently at or below reorder level</p></div>
@@ -187,51 +238,6 @@ require __DIR__ . '/../../includes/sidebar.php';
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>
-        </article>
-    </section>
-
-    <section class="content-grid">
-        <article class="panel activity-panel" id="recent-activity">
-            <div class="panel-heading">
-                <div>
-                    <h2>Recent activity</h2>
-                    <p class="muted">Latest recorded system events</p>
-                </div>
-                <?php if (hasRole(['super_admin', 'admin_officer', 'approving_officer', 'management'])): ?>
-                    <a class="text-link" href="<?= APP_BASE_URL ?>/modules/reports/index.php">View reports &amp; audit</a>
-                <?php endif; ?>
-            </div>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                    <tr>
-                        <th scope="col">Activity</th>
-                        <th scope="col">User</th>
-                        <th scope="col">Record</th>
-                        <th scope="col">Date &amp; time</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php if ($recentActivity === []): ?>
-                        <tr><td class="empty-state" colspan="4">No activity has been recorded yet.</td></tr>
-                    <?php else: ?>
-                        <?php foreach ($recentActivity as $activity): ?>
-                            <tr>
-                                <td><?= escapeHtml($activity['action_performed']) ?></td>
-                                <td><?= escapeHtml($activity['full_name'] ?? 'System') ?></td>
-                                <td>
-                                    <span class="badge"><?= escapeHtml($activity['target_table']) ?></span>
-                                    <?php if ($activity['record_id'] !== null): ?>
-                                        #<?= (int) $activity['record_id'] ?>
-                                    <?php endif; ?>
-                                </td>
-                                <td><?= escapeHtml(date('M j, Y H:i', strtotime($activity['timestamp']))) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
         </article>
 
         <aside class="panel quick-actions">
