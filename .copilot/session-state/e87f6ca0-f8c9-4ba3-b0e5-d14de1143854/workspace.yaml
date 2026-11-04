@@ -1,0 +1,9 @@
+id: e87f6ca0-f8c9-4ba3-b0e5-d14de1143854
+cwd: c:\Users\HAWANATU ALLAN\.copilot\chats\6aa9a16a-0feb-4467-93c0-fca8e46e9fb1
+client_name: vscode-agent-host
+name: 'Here is the refined, high-precision prompt structured specifically to produce complete, production-ready, security-hardened code from an AI assistant.Why this version is refined:Enforces Security Practices: Explicitly requests PDO prepared statements, CSRF protection, input sanitization, and password_hash() (Bcrypt/Argon2).Eliminates Code Truncation: Instructs the AI not to leave // write code here placeholders so you get complete, working files.Adds Modern UI Component Requirements: Specifies s...'
+user_named: false
+summary_count: 1
+fork_count: 0
+created_at: 2026-11-02T14:33:09.710Z
+updated_at: 2026-11-03T10:25:47.181Z

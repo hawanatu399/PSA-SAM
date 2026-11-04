@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1800" viewBox="0 0 1080 1800" role="img" aria-labelledby="title description">
+  <title id="title">PSA-SAMS project infographic</title>
+  <desc id="description">An overview of Public Service Academy Stores and Asset Management System capabilities, workflows, architecture, access controls, and deployment readiness.</desc>
+  <defs>
+    <linearGradient id="header" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#103b5b"/>
+      <stop offset="1" stop-color="#0876a5"/>
+    </linearGradient>
+    <linearGradient id="blueCard" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#eaf4f8"/>
+      <stop offset="1" stop-color="#f6fafc"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#17374f" flood-opacity=".08"/>
+    </filter>
+    <clipPath id="logoClip"><circle cx="38" cy="38" r="35"/></clipPath>
+    <style>
+      text { font-family: "Segoe UI", Arial, sans-serif; fill: #18324b; }
+      .eyebrow { font-size: 15px; font-weight: 700; letter-spacing: 2.2px; }
+      .title { font-size: 48px; font-weight: 800; letter-spacing: -1.5px; }
+      .subtitle { font-size: 20px; }
+      .section { font-size: 22px; font-weight: 800; }
+      .card-title { font-size: 18px; font-weight: 750; }
+      .body { font-size: 15px; fill: #52677b; }
+      .small { font-size: 13px; fill: #64758a; }
+      .white { fill: #fff; }
+      .light { fill: #dcecf4; }
+      .caps { font-size: 12px; font-weight: 800; letter-spacing: 1.5px; }
+      .stepnum { font-size: 13px; font-weight: 800; fill: #fff; text-anchor: middle; dominant-baseline: middle; }
+    </style>
+  </defs>
+
+  <rect width="1080" height="1800" fill="#f3f7fa"/>
+  <path d="M0 0h1080v254c-208 58-399 42-592 9C304 228 154 236 0 278z" fill="url(#header)"/>
+  <circle cx="956" cy="83" r="118" fill="#fff" opacity=".045"/>
+  <circle cx="1005" cy="181" r="71" fill="#4a952d" opacity=".26"/>
+  <path d="M818 0l152 0-151 254-65-13z" fill="#d6a52c" opacity=".8"/>
+  <path d="M875 0h60L786 243l-38-8z" fill="#4a952d" opacity=".9"/>
+
+  <g transform="translate(68 58)">
+    <circle cx="38" cy="38" r="35" fill="#fff" opacity=".16" stroke="#fff" stroke-opacity=".62" stroke-width="2"/>
+    <image href="../assets/images/psa-logo.jpg" x="3" y="3" width="70" height="70" clip-path="url(#logoClip)"/>
+    <text x="91" y="25" class="eyebrow light">PUBLIC SERVICE ACADEMY</text>
+    <text x="91" y="88" class="title white">PSA-SAMS</text>
+    <text x="91" y="122" class="subtitle light">Stores &amp; Asset Management System</text>
+  </g>
+  <text x="68" y="220" class="subtitle white">One controlled workspace for assets, inventory and operational accountability.</text>
+
+  <g transform="translate(68 286)">
+    <text class="section">What the system supports</text>
+    <text x="0" y="27" class="body">A role-based operational baseline designed for an ICT-managed PSA pilot.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="68" y="338" width="455" height="118" rx="15" fill="#fff"/>
+    <rect x="68" y="338" width="7" height="118" rx="4" fill="#0876a5"/>
+    <circle cx="112" cy="380" r="22" fill="#e6f3f8"/>
+    <path d="M102 373h20v16h-20zM106 369h12M106 393h12" fill="none" stroke="#0876a5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="148" y="376" class="card-title">Asset lifecycle</text>
+    <text x="148" y="403" class="body">Register, assign, return, transfer, maintain</text>
+    <text x="148" y="426" class="body">and search tagged Academy assets.</text>
+
+    <rect x="557" y="338" width="455" height="118" rx="15" fill="#fff"/>
+    <rect x="557" y="338" width="7" height="118" rx="4" fill="#d6a52c"/>
+    <circle cx="601" cy="380" r="22" fill="#fbf4df"/>
+    <path d="M591 373h20v18h-20zM595 369h12M595 378h12M595 384h8" fill="none" stroke="#b28516" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="637" y="376" class="card-title">Stores &amp; requisitions</text>
+    <text x="637" y="403" class="body">Track stock, receipts, reorder levels</text>
+    <text x="637" y="426" class="body">and request-to-issue movements.</text>
+
+    <rect x="68" y="474" width="455" height="118" rx="15" fill="#fff"/>
+    <rect x="68" y="474" width="7" height="118" rx="4" fill="#4a952d"/>
+    <circle cx="112" cy="516" r="22" fill="#edf6e9"/>
+    <path d="M112 502l13 6v10c0 8-7 13-13 16-6-3-13-8-13-16v-10zM106 518l4 4 9-10" fill="none" stroke="#4a952d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="148" y="512" class="card-title">Physical verification</text>
+    <text x="148" y="539" class="body">Schedule campaigns; record found/missing,</text>
+    <text x="148" y="562" class="body">condition, verifier and optional evidence.</text>
+
+    <rect x="557" y="474" width="455" height="118" rx="15" fill="#fff"/>
+    <rect x="557" y="474" width="7" height="118" rx="4" fill="#5b6d88"/>
+    <circle cx="601" cy="516" r="22" fill="#eef1f6"/>
+    <path d="M590 526h22M593 522v-11h16v11M596 507h10M597 515h8" fill="none" stroke="#52677b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="637" y="512" class="card-title">Reports &amp; maintenance</text>
+    <text x="637" y="539" class="body">Review condition, repairs, audit events,</text>
+    <text x="637" y="562" class="body">print reports and export operational data.</text>
+
+    <rect x="68" y="610" width="455" height="118" rx="15" fill="#fff"/>
+    <rect x="68" y="610" width="7" height="118" rx="4" fill="#0876a5"/>
+    <circle cx="112" cy="652" r="22" fill="#e6f3f8"/>
+    <path d="M102 646h20v16h-20zM107 642h10M106 651h12M106 656h8" fill="none" stroke="#0876a5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="148" y="648" class="card-title">People &amp; reference data</text>
+    <text x="148" y="675" class="body">Manage role-based accounts, departments</text>
+    <text x="148" y="698" class="body">and asset categories with audit history.</text>
+
+    <rect x="557" y="610" width="455" height="118" rx="15" fill="#fff"/>
+    <rect x="557" y="610" width="7" height="118" rx="4" fill="#d6a52c"/>
+    <circle cx="601" cy="652" r="22" fill="#fbf4df"/>
+    <path d="M590 646h22v15h-22zM595 642h12M595 651h12M595 656h7" fill="none" stroke="#b28516" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="637" y="648" class="card-title">Dashboard &amp; alerts</text>
+    <text x="637" y="675" class="body">Surface asset, stock, approval and</text>
+    <text x="637" y="698" class="body">maintenance attention indicators.</text>
+  </g>
+
+  <g transform="translate(68 778)">
+    <text class="section">Three practical control flows</text>
+    <text x="0" y="27" class="body">People, records and approvals stay connected through traceable steps.</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="68" y="830" width="944" height="104" rx="15" fill="url(#blueCard)"/>
+    <text x="94" y="866" class="caps" fill="#0876a5">ASSET</text>
+    <text x="94" y="891" class="small">Ownership &amp; condition</text>
+    <g transform="translate(290 852)">
+      <rect width="150" height="52" rx="10" fill="#fff"/><text x="75" y="32" text-anchor="middle" class="card-title">Register</text>
+      <text x="165" y="34" font-size="22" fill="#0876a5">›</text>
+      <rect x="190" width="150" height="52" rx="10" fill="#fff"/><text x="265" y="32" text-anchor="middle" class="card-title">Assign / move</text>
+      <text x="355" y="34" font-size="22" fill="#0876a5">›</text>
+      <rect x="380" width="150" height="52" rx="10" fill="#fff"/><text x="455" y="32" text-anchor="middle" class="card-title">Verify / maintain</text>
+      <text x="545" y="34" font-size="22" fill="#0876a5">›</text>
+      <rect x="570" width="112" height="52" rx="10" fill="#e9f4e3"/><text x="626" y="32" text-anchor="middle" class="card-title">Report</text>
+    </g>
+
+    <rect x="68" y="948" width="944" height="104" rx="15" fill="#fff8e6"/>
+    <text x="94" y="984" class="caps" fill="#9a7516">STORES</text>
+    <text x="94" y="1009" class="small">Request-to-issue</text>
+    <g transform="translate(290 970)">
+      <rect width="150" height="52" rx="10" fill="#fff"/><text x="75" y="32" text-anchor="middle" class="card-title">Request</text>
+      <text x="165" y="34" font-size="22" fill="#b28516">›</text>
+      <rect x="190" width="150" height="52" rx="10" fill="#fff"/><text x="265" y="32" text-anchor="middle" class="card-title">Separate approval</text>
+      <text x="355" y="34" font-size="22" fill="#b28516">›</text>
+      <rect x="380" width="150" height="52" rx="10" fill="#fff"/><text x="455" y="32" text-anchor="middle" class="card-title">Issue &amp; deduct</text>
+      <text x="545" y="34" font-size="22" fill="#b28516">›</text>
+      <rect x="570" width="112" height="52" rx="10" fill="#f6edce"/><text x="626" y="32" text-anchor="middle" class="card-title">Audit</text>
+    </g>
+
+    <rect x="68" y="1066" width="944" height="104" rx="15" fill="#edf6e9"/>
+    <text x="94" y="1102" class="caps" fill="#367522">VERIFICATION</text>
+    <text x="94" y="1127" class="small">Campaign-to-evidence</text>
+    <g transform="translate(290 1088)">
+      <rect width="150" height="52" rx="10" fill="#fff"/><text x="75" y="32" text-anchor="middle" class="card-title">Plan departments</text>
+      <text x="165" y="34" font-size="22" fill="#4a952d">›</text>
+      <rect x="190" width="150" height="52" rx="10" fill="#fff"/><text x="265" y="32" text-anchor="middle" class="card-title">Check assets</text>
+      <text x="355" y="34" font-size="22" fill="#4a952d">›</text>
+      <rect x="380" width="150" height="52" rx="10" fill="#fff"/><text x="455" y="32" text-anchor="middle" class="card-title">Review progress</text>
+      <text x="545" y="34" font-size="22" fill="#4a952d">›</text>
+      <rect x="570" width="112" height="52" rx="10" fill="#dcefd3"/><text x="626" y="32" text-anchor="middle" class="card-title">Export</text>
+    </g>
+  </g>
+
+  <g transform="translate(68 1218)">
+    <text class="section">How it fits together</text>
+    <text x="0" y="27" class="body">A straightforward web application with ICT-operated hosting and safeguards.</text>
+  </g>
+  <g>
+    <rect x="68" y="1270" width="944" height="174" rx="16" fill="#fff" filter="url(#shadow)"/>
+    <rect x="94" y="1301" width="196" height="105" rx="12" fill="#edf3fb"/>
+    <text x="192" y="1336" text-anchor="middle" class="caps" fill="#52677b">ACCESS</text>
+    <text x="192" y="1367" text-anchor="middle" class="card-title">PSA browser</text>
+    <text x="192" y="1390" text-anchor="middle" class="small">staff and managers</text>
+    <text x="305" y="1365" font-size="25" fill="#0876a5">›</text>
+
+    <rect x="335" y="1301" width="196" height="105" rx="12" fill="#e9f4f8"/>
+    <text x="433" y="1336" text-anchor="middle" class="caps" fill="#0876a5">APPLICATION</text>
+    <text x="433" y="1367" text-anchor="middle" class="card-title">HTTPS + Apache/PHP</text>
+    <text x="433" y="1390" text-anchor="middle" class="small">role checks and workflows</text>
+    <text x="546" y="1365" font-size="25" fill="#0876a5">›</text>
+
+    <rect x="576" y="1301" width="196" height="105" rx="12" fill="#edf6e9"/>
+    <text x="674" y="1336" text-anchor="middle" class="caps" fill="#367522">RECORDS</text>
+    <text x="674" y="1367" text-anchor="middle" class="card-title">MySQL / MariaDB</text>
+    <text x="674" y="1390" text-anchor="middle" class="small">transactional data + audit</text>
+    <text x="787" y="1365" font-size="25" fill="#0876a5">›</text>
+
+    <rect x="817" y="1301" width="169" height="105" rx="12" fill="#fff5df"/>
+    <text x="901" y="1336" text-anchor="middle" class="caps" fill="#9a7516">OPERATIONS</text>
+    <text x="901" y="1367" text-anchor="middle" class="card-title">Protected evidence</text>
+    <text x="901" y="1390" text-anchor="middle" class="small">backup + restore by ICT</text>
+  </g>
+
+  <g transform="translate(68 1480)">
+    <text class="section">Access, security &amp; readiness</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="68" y="1518" width="457" height="131" rx="14" fill="#fff"/>
+    <text x="92" y="1552" class="caps" fill="#0876a5">FIVE ROLE TYPES</text>
+    <text x="92" y="1580" class="body">Super admin • Administration • Stores</text>
+    <text x="92" y="1605" class="body">Approver • Management (read-only oversight)</text>
+    <text x="92" y="1630" class="small">Server-side access checks and audited workflows.</text>
+
+    <rect x="557" y="1518" width="455" height="131" rx="14" fill="#fff"/>
+    <text x="581" y="1552" class="caps" fill="#367522">DEPLOYMENT BOUNDARY</text>
+    <text x="581" y="1580" class="body">HTTPS-ready application; ICT must provide</text>
+    <text x="581" y="1605" class="body">managed host, TLS, least-privilege DB, backups,</text>
+    <text x="581" y="1630" class="body">monitoring and approved access policy.</text>
+  </g>
+
+  <rect x="68" y="1680" width="944" height="75" rx="13" fill="#103b5b"/>
+  <circle cx="101" cy="1717" r="14" fill="#d6a52c"/>
+  <text x="101" y="1722" text-anchor="middle" font-size="17" font-weight="800" fill="#103b5b">!</text>
+  <text x="128" y="1711" class="card-title white">Current stage: local/demo baseline prepared for ICT-managed pilot assessment.</text>
+  <text x="128" y="1736" class="small light">Not production approval: PSA policy sign-off, multi-user acceptance, and managed operations remain required.</text>
+</svg>

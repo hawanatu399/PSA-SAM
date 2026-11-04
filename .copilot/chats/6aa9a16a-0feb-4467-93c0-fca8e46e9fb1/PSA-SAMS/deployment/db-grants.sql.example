@@ -1,0 +1,29 @@
+-- DBA template: replace the example account, host, and secret before execution.
+-- Do not put an actual password in source control or this file.
+CREATE USER IF NOT EXISTS 'psa_sams_app'@'localhost'
+    IDENTIFIED BY 'REPLACE_WITH_A_UNIQUE_RANDOM_SECRET';
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.departments
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.users
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.login_attempts
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.asset_categories
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.assets
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.asset_assignments
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.asset_transfers
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.store_items
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.stock_transactions
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON psa_sams_db.maintenance_records
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT ON psa_sams_db.audit_logs
+    TO 'psa_sams_app'@'localhost';
+
+-- Schema creation/import and migrations must use a separate DBA account.
