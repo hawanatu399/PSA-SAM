@@ -4,7 +4,7 @@ Public Service Academy Stores and Asset Management System (PSA-SAMS) is a PHP 8 
 
 ## Phase 1 scope
 
-This release includes:
+This release includes:g
 
 - A relational InnoDB database schema and repeatable demonstration seed data.
 - Sign-in, sign-out, CSRF protection, session hardening, password hashing, and five-role access checks.
