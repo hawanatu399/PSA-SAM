@@ -118,9 +118,12 @@ $requiredTables = [
     'verification_campaigns',
     'audit_logs',
     'departments',
+    'department_stock',
+    'department_attendance',
     'login_attempts',
     'maintenance_records',
     'stock_transactions',
+    'stock_checks',
     'store_items',
     'store_requisitions',
     'users',
@@ -142,7 +145,24 @@ $report(
     $missingTables === [] ? 'PASS' : 'FAIL',
     $missingTables === []
         ? 'All ' . count($requiredTables) . ' required application tables are present.'
-        : 'Missing required tables: ' . implode(', ', $missingTables) . '. Import the reviewed schema before use.'
+        : 'Missing required tables: ' . implode(', ', $missingTables) . '. Import the initial schema or apply the matching reviewed migration before use.'
+);
+
+$departmentStaffRoleQuery = $pdo->prepare(
+    'SELECT COLUMN_TYPE
+     FROM information_schema.COLUMNS
+     WHERE TABLE_SCHEMA = DATABASE()
+       AND TABLE_NAME = \'users\'
+       AND COLUMN_NAME = \'role\''
+);
+$departmentStaffRoleQuery->execute();
+$userRoleType = $departmentStaffRoleQuery->fetchColumn();
+$hasDepartmentStaffRole = is_string($userRoleType) && str_contains($userRoleType, 'department_staff');
+$report(
+    $hasDepartmentStaffRole ? 'PASS' : 'FAIL',
+    $hasDepartmentStaffRole
+        ? 'The least-privilege department staff role is available.'
+        : 'The department_staff user role is missing. Apply the department attendance migration.'
 );
 
 $nonInnoDbTables = [];

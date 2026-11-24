@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 define('APP_NAME', 'Public Service Academy - Stores & Asset Management');
+date_default_timezone_set('Africa/Freetown');
 $baseUrl = getenv('PSA_APP_BASE_URL') ?: '/PSA-SAMS';
 
 if (!preg_match('#^/(?:[A-Za-z0-9._~-]+(?:/[A-Za-z0-9._~-]+)*)?$#', $baseUrl) || str_contains($baseUrl, '..')) {
@@ -81,6 +82,7 @@ final class Database
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
+            self::$connection->exec("SET time_zone = '+00:00'");
         } catch (PDOException $exception) {
             error_log('PSA-SAMS database connection failed: ' . $exception->getMessage());
             throw new RuntimeException('The application could not connect to its database.', 0, $exception);

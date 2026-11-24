@@ -9,6 +9,11 @@ $roleNavigation = [
         'icon' => 'M4 7 12 3l8 4v10l-8 4-8-4V7Zm0 0 8 4 8-4M12 11v10',
         'roles' => ['super_admin', 'admin_officer', 'stores_officer'],
     ],
+    'attendance' => [
+        'label' => 'Department attendance',
+        'icon' => 'M8 3v3m8-3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13H4V6a1 1 0 0 1 1-1Zm3 8 2 2 4-4',
+        'roles' => ['super_admin', 'admin_officer', 'stores_officer', 'approving_officer', 'management', 'department_staff'],
+    ],
     'stores' => [
         'label' => 'Stores & inventory',
         'icon' => 'M4 6 12 3l8 3-8 3-8-3Zm0 6 8 3 8-3M4 18l8 3 8-3M4 6v12m16-12v12m-8-9v12',

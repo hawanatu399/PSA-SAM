@@ -9,7 +9,13 @@ requireRole([
     'stores_officer',
     'approving_officer',
     'management',
+    'department_staff',
 ]);
+
+if (hasRole('department_staff')) {
+    header('Location: ' . APP_BASE_URL . '/modules/attendance/index.php');
+    exit;
+}
 
 $pdo = Database::connection();
 $canReviewRequisitions = hasRole(['super_admin', 'admin_officer', 'stores_officer', 'approving_officer']);

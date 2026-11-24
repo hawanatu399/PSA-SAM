@@ -126,7 +126,7 @@ if (isPostRequest()) {
             }
 
             $requestQuery = $pdo->prepare(
-                'SELECT requisition.id, requisition.item_id, requisition.quantity, requisition.purpose,
+                'SELECT requisition.id, requisition.department_id, requisition.item_id, requisition.quantity, requisition.purpose,
                         requisition.requested_by, requisition.approved_by, requisition.status, items.item_name
                  FROM store_requisitions AS requisition
                  JOIN store_items AS items ON items.id = requisition.item_id
@@ -165,12 +165,24 @@ if (isPostRequest()) {
                 throw new InvalidArgumentException('Stock changed before the issue could be completed. Refresh and try again.');
             }
 
+            $departmentStockUpdate = $pdo->prepare(
+                'INSERT INTO department_stock (department_id, item_id, current_stock)
+                 VALUES (:department_id, :item_id, :quantity)
+                 ON DUPLICATE KEY UPDATE current_stock = current_stock + VALUES(current_stock)'
+            );
+            $departmentStockUpdate->execute([
+                'department_id' => (int) $requisition['department_id'],
+                'item_id' => (int) $requisition['item_id'],
+                'quantity' => $requisition['quantity'],
+            ]);
+
             $transaction = $pdo->prepare(
                 "INSERT INTO stock_transactions (item_id, transaction_type, quantity, performed_by, notes)
                  VALUES (:item_id, 'OUT', :quantity, :performed_by, :notes)"
             );
             $transaction->execute([
                 'item_id' => (int) $requisition['item_id'],
+                'department_id' => (int) $requisition['department_id'],
                 'quantity' => $requisition['quantity'],
                 'performed_by' => $actorId,
                 'notes' => 'Requisition #' . $requestId . ': ' . $requisition['purpose'],

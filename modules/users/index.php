@@ -21,11 +21,12 @@ if (isPostRequest()) {
             $password = formRawString('password');
             $departmentInput = formString('department_id');
             $departmentId = $departmentInput === '' ? null : filter_var($departmentInput, FILTER_VALIDATE_INT);
-            $validRoles = ['super_admin', 'admin_officer', 'stores_officer', 'approving_officer', 'management'];
+            $validRoles = ['super_admin', 'admin_officer', 'stores_officer', 'approving_officer', 'management', 'department_staff'];
             if (!is_string($fullName) || $fullName === '' || strlen($fullName) > 150
                 || !is_string($email) || strlen($email) > 190 || filter_var($email, FILTER_VALIDATE_EMAIL) === false
                 || !in_array($role, $validRoles, true)
                 || ($departmentId !== null && (!is_int($departmentId) || $departmentId < 1))
+                || ($role === 'department_staff' && $departmentId === null)
                 || !is_string($password) || strlen($password) < 14 || strlen($password) > 72
                 || !preg_match('/[A-Z]/', $password) || !preg_match('/[a-z]/', $password)
                 || !preg_match('/[0-9]/', $password) || !preg_match('/[^A-Za-z0-9]/', $password)) {
@@ -145,8 +146,8 @@ require __DIR__ . '/../../includes/sidebar.php';
             <input type="hidden" name="csrf_token" value="<?= escapeHtml(csrfToken()) ?>"><input type="hidden" name="action" value="create_user">
             <label>Full name<input name="full_name" maxlength="150" required></label>
             <label>Email address<input name="email" type="email" maxlength="190" required></label>
-            <label>Role<select name="role" required><?php foreach (['admin_officer', 'stores_officer', 'approving_officer', 'management', 'super_admin'] as $role): ?><option value="<?= escapeHtml($role) ?>"><?= escapeHtml(ucwords(str_replace('_', ' ', $role))) ?></option><?php endforeach; ?></select></label>
-            <label>Department<select name="department_id"><option value="">No department</option><?php foreach ($departments as $department): ?><option value="<?= (int) $department['id'] ?>"><?= escapeHtml($department['department_name']) ?></option><?php endforeach; ?></select></label>
+            <label>Role<select name="role" required><?php foreach (['department_staff', 'admin_officer', 'stores_officer', 'approving_officer', 'management', 'super_admin'] as $role): ?><option value="<?= escapeHtml($role) ?>"><?= escapeHtml(ucwords(str_replace('_', ' ', $role))) ?></option><?php endforeach; ?></select></label>
+            <label>Department<select name="department_id"><option value="">No department</option><?php foreach ($departments as $department): ?><option value="<?= (int) $department['id'] ?>"><?= escapeHtml($department['department_name']) ?></option><?php endforeach; ?></select><span class="muted">Required for Department staff accounts.</span></label>
             <label>Initial password<input name="password" type="password" autocomplete="new-password" minlength="14" maxlength="72" required></label>
             <div class="form-actions"><button class="button button-primary" type="submit">Create account</button></div>
         </form>

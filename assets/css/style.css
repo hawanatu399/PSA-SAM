@@ -725,6 +725,46 @@ select option {
     overflow-x: auto;
 }
 
+.stock-check-period {
+    align-items: end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.stock-check-period label {
+    color: var(--color-muted);
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.stock-check-period select,
+.stock-check-actions input {
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
+    border-radius: 7px;
+    color: var(--color-ink);
+    min-height: 38px;
+    padding: 8px 10px;
+}
+
+.stock-check-actions {
+    display: grid;
+    gap: 7px;
+    min-width: 220px;
+}
+
+.stock-check-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.stock-check-actions .button {
+    white-space: nowrap;
+}
+
 table {
     border-collapse: collapse;
     min-width: 600px;

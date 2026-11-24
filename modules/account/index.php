@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../../includes/app.php';
-requireRole(['super_admin', 'admin_officer', 'stores_officer', 'approving_officer', 'management']);
+requireRole(['super_admin', 'admin_officer', 'stores_officer', 'approving_officer', 'management', 'department_staff']);
 
 $pdo = Database::connection();
 $userId = (int) $_SESSION['user']['id'];
@@ -52,7 +52,9 @@ if (isPostRequest()) {
             $_SESSION['auth_version']++;
             $_SESSION['must_change_password'] = false;
             setFlashMessage('success', 'Your password has been changed. Other active sessions have been invalidated.');
-            redirectTo('/modules/account/index.php');
+            redirectTo($_SESSION['user']['role'] === 'department_staff'
+                ? '/modules/attendance/index.php'
+                : '/modules/account/index.php');
         } catch (InvalidArgumentException $exception) {
             if ($pdo->inTransaction()) {
                 $pdo->rollBack();

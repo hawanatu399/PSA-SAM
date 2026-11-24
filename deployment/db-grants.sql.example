@@ -21,6 +21,12 @@ GRANT SELECT, INSERT, UPDATE ON psa_sams_db.store_items
     TO 'psa_sams_app'@'localhost';
 GRANT SELECT, INSERT ON psa_sams_db.stock_transactions
     TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT ON psa_sams_db.stock_checks
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON psa_sams_db.department_stock
+    TO 'psa_sams_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE ON psa_sams_db.department_attendance
+    TO 'psa_sams_app'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON psa_sams_db.maintenance_records
     TO 'psa_sams_app'@'localhost';
 GRANT SELECT, INSERT, UPDATE ON psa_sams_db.store_requisitions
